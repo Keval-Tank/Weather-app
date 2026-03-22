@@ -17,9 +17,18 @@
             <div class="c1">
                 <div class="logo" id="logo1" style="display: block;"></div>
                 <div class="box" id="box1" style="display: block;">
-                    <p>Enter your country to know today's temperature and other details</p>
+                    <p>Select country and city to get today's weather details</p>
                     <form action="" id="form">
-                        <input type="text" placeholder="Enter your country" id="in" value="Enter your country">
+                        <select id="countrySelect" required>
+                            <option value="">Select country</option>
+                        </select>
+                        <select id="stateSelect">
+                            <option value="">All states</option>
+                        </select>
+                        <select id="citySelect" required>
+                            <option value="">Select city</option>
+                        </select>
+                        <p id="formStatus"></p>
                         <div id="b1">
                             <button class="btn">Get Details</button>
                         </div>
@@ -72,11 +81,13 @@
                         </div>
                     </div>
                 </div>
+                <div id="refreshWrap" style="display: none;">
+                    <button type="button" id="refreshBtn" class="btn">Refresh</button>
+                </div>
             </div>
         </div>
     </div>
     <script src="weather.js"></script>
-    <script src="codeList.js"></script>
 </body>
 
 </html>
