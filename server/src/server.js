@@ -118,6 +118,7 @@ app.post("/api/weather/fetch-and-save", async (req, res) => {
   try {
     const countryInput = String(req.body.country || "").trim();
     const cityInput = String(req.body.city || "").trim();
+    const stateInput = String(req.body.state || "").trim();
 
     if (!countryInput || !cityInput) {
       return res.status(400).json({ error: "country and city are required" });
@@ -146,7 +147,8 @@ app.post("/api/weather/fetch-and-save", async (req, res) => {
       weather = await fetchCityWeather({
         country: countryRecord.country,
         countryCode: countryRecord.iso2,
-        city: matchedCity
+        city: matchedCity,
+        state: stateInput || null
       });
     } catch (error) {
       const message = String(error?.message || "Failed to fetch weather");
@@ -193,6 +195,7 @@ app.post("/api/weather/fetch-and-save", async (req, res) => {
       country: weather.country,
       countryCode: weather.countryCode,
       city: weather.city,
+      state: weather.state || null,
       dateKey,
       fetchedAt: now,
       location: weather.location,
@@ -215,6 +218,7 @@ app.post("/api/weather/fetch-and-save", async (req, res) => {
       country: weather.country,
       countryCode: weather.countryCode,
       city: weather.city,
+      state: weather.state || null,
       current: weather.current,
       forecast: weather.forecast
     });

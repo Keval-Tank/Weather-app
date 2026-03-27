@@ -5,7 +5,7 @@ function roundNumber(value) {
     return null;
   }
 
-  return Math.round(value * 10) / 10;
+  return Math.round(value * 100) / 100;
 }
 
 function celsiusText(value) {
@@ -56,11 +56,13 @@ async function getWeatherByCoordinates(latitude, longitude) {
   return response.json();
 }
 
-export async function fetchCityWeather({ country, countryCode, city }) {
+export async function fetchCityWeather({ country, countryCode, city, state }) {
   const location = await geocodeCity(city, countryCode);
   if (!location) {
     throw new Error(`Unable to geocode city '${city}'`);
   }
+
+  const resolvedState = location.admin1 || location.state || state || null;
 
   const weatherData = await getWeatherByCoordinates(location.latitude, location.longitude);
   const current = weatherData.current || {};
@@ -85,6 +87,9 @@ export async function fetchCityWeather({ country, countryCode, city }) {
 
     return {
       day,
+      minTemperatureValue: min,
+      maxTemperatureValue: max,
+      windValue: wind,
       temperature: min === null && max === null ? "N/A" : `${celsiusText(min)} to ${celsiusText(max)}`,
       wind: kmhText(wind),
       description: describeWeatherCode(weatherCode)
@@ -95,14 +100,18 @@ export async function fetchCityWeather({ country, countryCode, city }) {
     country,
     countryCode,
     city,
+    state: resolvedState,
     location: {
       name: location.name,
       latitude: location.latitude,
       longitude: location.longitude,
+      state: resolvedState,
       country: location.country || country,
       timezone: weatherData.timezone || null
     },
     current: {
+      temperatureValue: currentTemperature,
+      windValue: currentWind,
       temperature: celsiusText(currentTemperature),
       wind: kmhText(currentWind),
       description: describeWeatherCode(currentCode)

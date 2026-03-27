@@ -52,6 +52,26 @@
                         <p id="wind">hi</p>
                     </div>
                 </div><br>
+                <div id="chartWrap" style="display: none;">
+                    <div class="chartControls">
+                        <div>
+                            <label for="metricToggle">Chart</label>
+                            <select id="metricToggle">
+                                <option value="temperature">Temperature</option>
+                                <option value="wind">Wind</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="unitToggle">Temp Unit</label>
+                            <select id="unitToggle">
+                                <option value="C">Celsius (C)</option>
+                                <option value="F">Fahrenheit (F)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h3 id="chartTitle">Temperature Trend</h3>
+                    <canvas id="weatherChart"></canvas>
+                </div>
                 <p id="fn" style="display: none;">Here forecast of following days are given below....</p>
                 <div id="f1" style="display: none;">
                     <div class="fl">Forecast</div>
@@ -87,6 +107,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="weather.js"></script>
 </body>
 
